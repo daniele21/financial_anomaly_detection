@@ -36,6 +36,12 @@ The dataset is provided by the yahoo finance API _(yfinance)_. I focus mainly on
     
 #### The anomaly is referred to the window **w**, that pct_change_w is computed on
 
-![Labeling]('static/Anomaly Definition.png)
+Example of anomaly labeling:
+![Labeling](https://raw.github.com/daniele21/financial_anomaly_detection/main/static/Anomaly%20labeling.png?raw=true)
+
+
+## Solution
+My idea is to train a **Deep Learning model** on those data windows that are **not anomalous**, using the **Autoencoder Network** defined as following:
+
 
 
