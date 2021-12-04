@@ -17,7 +17,7 @@ def window_data(df: pd.DataFrame,
 
         window_df = df.iloc[start: end]
         if (window_df['anomaly'] == anomaly).all():
-            window_dict = {'date': window_df.index.to_list(),
+            window_dict = {'date': [x.date() for x in window_df.index.to_list()],
                            'close': window_df['Close'].to_list()}
             windows_list.append(window_dict)
 

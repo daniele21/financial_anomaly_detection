@@ -2,6 +2,7 @@ import unittest
 
 from scripts.data.ticker_data import TickerData
 from scripts.utils.logger import setup_logger
+from scripts.visualization.window import plot_windows
 
 logger = setup_logger('Ticker Data test')
 
@@ -26,11 +27,13 @@ class TestTickerData(unittest.TestCase):
 
     def test_get_anomalous_windows(self):
         self.ticker_data.label_data()
-        neg_anomaly_df = self.ticker_data.get_negative_anomalous_windows()
-        pos_anomaly_df = self.ticker_data.get_positive_anomalous_windows()
+        neg_anomaly_list = self.ticker_data.get_negative_anomalous_windows()
+        pos_anomaly_list = self.ticker_data.get_positive_anomalous_windows()
 
-        self.assertIsNotNone(neg_anomaly_df)
-        self.assertIsNotNone(pos_anomaly_df)
+        plot_windows(neg_anomaly_list, 'negative anomaly windows')
+
+        self.assertIsNotNone(neg_anomaly_list)
+        self.assertIsNotNone(pos_anomaly_list)
 
 
 if __name__ == '__main__':
