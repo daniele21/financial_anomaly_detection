@@ -1,11 +1,13 @@
 import unittest
+
+import numpy as np
 import pandas as pd
 from yfinance import Ticker
-import numpy as np
+
+from scripts.analysis.frac_diff import frac_diff_ffd_analysis, get_min_diff_ffd
 from scripts.data.extract import extract_data
 from scripts.data.features import add_pct_change, add_variance, add_return, add_log, add_volatility
-from scripts.data.frac_diff import get_weights, get_weights_FFD, frac_diff, frac_diff_FFD, get_opt_d, \
-    get_min_frac_diff_ffd
+from scripts.data.frac_diff import get_weights, get_weights_FFD, frac_diff, frac_diff_FFD, get_opt_d
 from scripts.visualization.frac_diff_plot import plot_min_frac_diff
 
 
@@ -105,10 +107,12 @@ class TestAnalysis(unittest.TestCase):
 
         feature = 'Close'
         thr = 0.01
-        ds = np.linspace(0, 1, 11)
+        ds = np.linspace(0, 1, 21)
 
-        adf_df = get_min_frac_diff_ffd(data, feature, ds)
+        adf_df = frac_diff_ffd_analysis(data, feature, ds)
         plot_min_frac_diff(adf_df, title=ticker)
+
+        get_min_diff_ffd(adf_df)
 
         self.assertIsNotNone(adf_df)
 
