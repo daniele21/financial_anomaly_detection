@@ -33,17 +33,22 @@ Forecasting problem are very difficult to be launch in real-case use, because th
 **Nowcasting** does not take the responsability to predict the future, as forecasting does, but it tries to predict the actual state or the near future. For this reason, I'm developing this project for **preventing some shock** that could affect the price trend of a financial product.
 
 ## Goal
-Given a window, the **FAD model** detects if the window is **normal** or **anomalous**
+Given a window, the **FAD (Financial Anomaly Detection) model** detects if that window is **normal** or **anomalous**.
 
 ## Dataset
-The dataset is provided by the yahoo finance API _(yfinance)_. I focus mainly on **Crypto** data.
+The dataset is public, given by yahoo finance, extracted with **pandas_datareader**. I focus mainly on **Crypto** time-series.
 
+Features provided are: Open, Close, Low, High, Volume.
+
+Feature Engineering phase adds new features to the starting dataset.
 ## Anomaly Definition
+In this project are implemented three methods for labeling raw time-series: 
   - [Price Change Based](#price-change-based)
   - [Triple Barrier](#triple-barrier)
   - [Meta-Labeling](#meta-labeling)
+---------------
 ### Price Change Based
-#### Assumptions
+##### Assumptions
 - Assuming the **Price** function, that returns the price value at the timestamp **i**:
 
 ![Price](static/equations/price.png)
@@ -62,15 +67,21 @@ The dataset is provided by the yahoo finance API _(yfinance)_. I focus mainly on
 
 ![quantile_5](static/equations/quantile_95.png)
 
-- Given a var_min, as the minum variance to take into account, an **anomaly window** is defined as following:
+##### Definition
+- Given a var_min, as the minimum variance to take into account, an **anomaly window** is defined as following:
 
 ![anomaly](static/equations/anomaly_defintion.png)
 
 Example of anomaly labeling with **price change based** labeling method:
 ![Labeling](static/anomaly_labeling.png)
 
+-------------
+
 ### Triple Barrier
 WIP
+
+-------------
+
 ### Meta-Labeling
 WIP
 ## Analysis
@@ -83,7 +94,7 @@ De Prado in [1] explains the **'stationary vs memory dilemma'**: in finance the 
 the presence of the memory in the time-series itself. Transforming the time-series obtaining a stationary trend
 (i.e. computing the return on price or the changes in volatility, ecc.), led to lose the memory from the time-series.
 "**Memory is the basis of predictive power for models, but stationarity is a necessary property for inferencial purposes**.
-The **dilemma** is that **returns** are **stationary**, however **memory-less**, and **prices have **memory**,
+The **dilemma** is that the **return** is **stationary**, however **memory-less**, and **prices** have **memory**,
 however they are **non-stationary**."
 
 The idea is transforming the time-series in order to consider it as **stationary**, where **not all memory is erased**.
