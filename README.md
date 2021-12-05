@@ -46,25 +46,25 @@ The dataset is provided by the yahoo finance API _(yfinance)_. I focus mainly on
 #### Assumptions
 - Assuming the **Price** function, that returns the price value at the timestamp **i**:
 
-![Price](static/equations/price.svg)
+![Price](static/equations/price.png)
 
 - Let's define the **price change** *pc* on **window** *w* as following:
 
-![price_change_eq](static/equations/price_change.svg)
+![price_change_eq](static/equations/price_change.png)
 
 - Let's consider the **variance** function that returns a variance of the price relative to a defined window **w**:
 
-![variance](static/equations/variance.svg)
+![variance](static/equations/variance.png)
 
 - Now let's take the 5% and 95% quantile of **pc_w** and set the **minimum variance** to take into account:
 
-![quantile_5](static/equations/quantile_5.svg)
+![quantile_5](static/equations/quantile_5.png)
 
-![quantile_5](static/equations/quantile_95.svg)
+![quantile_5](static/equations/quantile_95.png)
 
 - Given a var_min, as the minum variance to take into account, an **anomaly window** is defined as following:
 
-![anomaly](static/equations/anomaly_definition.svg)
+![anomaly](static/equations/anomaly_defintion.png)
 
 Example of anomaly labeling with **price change based** labeling method:
 ![Labeling](static/anomaly_labeling.png)
