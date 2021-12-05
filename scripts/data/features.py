@@ -1,7 +1,6 @@
 from typing import List
 import numpy as np
 import pandas as pd
-import logging
 from scripts.data.frac_diff import frac_diff_FFD
 
 

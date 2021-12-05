@@ -16,7 +16,7 @@ Dependences:
 - [Goal](#goal)
 - [Dataset](#dataset)
 - [Anomaly Definition](#anomaly-definition)
-  - [Price Change](#price-change)
+  - [Price Change Based](#price-change-based)
   - [Triple Barrier](#triple-barrier)
   - [Meta-Labeling](#meta-labeling)
 - [Analysis](#analysis)
@@ -39,31 +39,45 @@ Given a window, the **FAD model** detects if the window is **normal** or **anoma
 The dataset is provided by the yahoo finance API _(yfinance)_. I focus mainly on **Crypto** data.
 
 ## Anomaly Definition
+  - [Price Change Based](#price-change-based)
+  - [Triple Barrier](#triple-barrier)
+  - [Meta-Labeling](#meta-labeling)
 ### Price Change Based
 #### Assumptions
-Let's define the **price change** *pc* on **window** *w* as following:
+- Assuming the **Price** function, that returns the price value at the timestamp **i**:
 
-- <img src="https://bit.ly/3GfEP5u" align="center" border="0" alt="pc_w = \frac{Price_{i+w} - Price_i}{Price_i}" width="199" height="46" />
+![Price](static/equations/price.svg)
 
-Now let's take the 95% quantile of **pc_w** and set the minimum variance to taking into account:
+- Let's define the **price change** *pc* on **window** *w* as following:
 
-- <img src="https://bit.ly/3rBOwYa" align="center" border="0" alt="q = Quantile(pc_w, 0.95)" width="204" height="19" />
+![price_change_eq](static/equations/price_change.svg)
 
+- Let's consider the **variance** function that returns a variance of the price relative to a defined window **w**:
 
-- <img src="https://bit.ly/3xWsU9H" align="center" border="0" alt="var_{min}" width="60" height="15" />
+![variance](static/equations/variance.svg)
 
+- Now let's take the 5% and 95% quantile of **pc_w** and set the **minimum variance** to take into account:
 
-#### The anomaly is referred to the window **w**, that pct_change_w is computed on
+![quantile_5](static/equations/quantile_5.svg)
 
-Example of anomaly labeling:
-![Labeling](https://raw.github.com/daniele21/financial_anomaly_detection/main/static/Anomaly%20labeling.png?raw=true)
+![quantile_5](static/equations/quantile_95.svg)
+
+- Given a var_min, as the minum variance to take into account, an **anomaly window** is defined as following:
+
+![anomaly](static/equations/anomaly_definition.svg)
+
+Example of anomaly labeling with **price change based** labeling method:
+![Labeling](static/anomaly_labeling.png)
 
 ### Triple Barrier
+WIP
 ### Meta-Labeling
-
+WIP
 ## Analysis
 
 ### Feature Engineering
+WIP
+
 ### Fractionally Differentiated Features
 De Prado in [1] explains the **'stationary vs memory dilemma'**: in finance the time-series are non-stationary, due to
 the presence of the memory in the time-series itself. Transforming the time-series obtaining a stationary trend
@@ -87,9 +101,10 @@ a still high **correlation** with the original time-series around **0.9**
 
 
 ### Feature Selection
+WIP
 
 ## Models
-
+WIP
 
 
 
