@@ -5,8 +5,6 @@ import pandas as pd
 from statsmodels.tsa.stattools import adfuller
 from tqdm import tqdm
 
-from scripts.visualization.frac_diff_plot import plot_min_frac_diff
-
 
 def get_weights(d, size=10000):
     w = [1.]
@@ -39,6 +37,31 @@ def get_weights_FFD(d: float,
         w.append(w_)
     w = np.array(w)
     return w
+
+
+# def get_weight_ffd(d, thres, lim):
+#     w, k = [1.], 1
+#     ctr = 0
+#     while True:
+#         w_ = -w[-1] / k * (d - k + 1)
+#         if abs(w_) < thres:
+#             break
+#         w.append(w_)
+#         k += 1
+#         ctr += 1
+#         if ctr == lim - 1:
+#             break
+#     w = np.array(w[::-1]).reshape(-1, 1)
+#     return w
+
+# def frac_diff_ffd(x, d, thres=1e-5):
+#     w = get_weight_ffd(d, thres, len(x))
+#     width = len(w) - 1
+#     output = []
+#     output.extend([0] * width)
+#     for i in range(width, len(x)):
+#         output.append(np.dot(w.T, x[i - width:i + 1])[0])
+#     return np.array(output)
 
 
 def frac_diff(series: pd.Series,
@@ -100,7 +123,7 @@ def frac_diff_FFD(series: pd.Series,
             continue  # exclude NAs
         frac_diff_df[loc1] = np.dot(w.T, series.loc[loc0:loc1])
     frac_diff_df = frac_diff_df.rename('frac_diff_ffd')
-    end = len(frac_diff_df)
+    end = len(frac_diff_df) + 1
     frac_diff_df = pd.concat((series.iloc[:-end].to_frame(), frac_diff_df.to_frame()))['frac_diff_ffd']
     return frac_diff_df
 

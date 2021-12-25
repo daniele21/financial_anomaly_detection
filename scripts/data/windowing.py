@@ -1,13 +1,14 @@
 import pandas as pd
 
 
-def window_data(df: pd.DataFrame,
+def get_windows(df: pd.DataFrame,
                 window: int,
                 anomaly: int):
     assert anomaly in [-1, 0, 1], f' > No valid anomaly: {anomaly}'
 
     windows_list = []
 
+    k = 0
     for i in range(len(df)):
         start = i
         end = i + window if i + window < len(df) else None
@@ -16,9 +17,11 @@ def window_data(df: pd.DataFrame,
             continue
 
         window_df = df.iloc[start: end]
-        if (window_df['anomaly'] == anomaly).all():
-            window_dict = {'date': [x.date() for x in window_df.index.to_list()],
-                           'close': window_df['Close'].to_list()}
-            windows_list.append(window_dict)
+
+        # Normal window if all in windows are normal
+        # Anomalous window if at least one is anomalous
+        if (anomaly == 0 and (window_df['anomaly'] == anomaly).all()) or \
+                (anomaly != 0 and (window_df['anomaly'] == anomaly).any()):
+            windows_list.append(window_df)
 
     return windows_list
