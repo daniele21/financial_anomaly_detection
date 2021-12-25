@@ -1,0 +1,2 @@
+class PreprocessingVersionException(Exception):
+    pass
